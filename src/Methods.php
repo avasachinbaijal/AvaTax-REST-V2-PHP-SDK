@@ -11039,26 +11039,6 @@ class AvaTaxClient extends AvaTaxClientBase
     }
 
     /**
-     * Evaluates a transaction against a set of direct-to-consumer shipping regulations.
-     *
-     * This method has moved to /shipment/verify
-     * Swagger Name: AvaTaxBeverageClient
-     * 
-     * @param string $companyCode The company code of the company that recorded the transaction
-     * @param string $transactionCode The transaction code to retrieve
-     * @param string $documentType (Optional): The document type of the transaction to operate on. If omitted, defaults to "SalesInvoice"
-     * @return ShippingVerifyResult
-     */
-    public function decrecatedVerifyShipment($companyCode, $transactionCode, $documentType)    {
-        $path = "/api/v2/companies/{$companyCode}/transactions/{$transactionCode}/shippingverify";
-        $guzzleParams = [
-            'query' => ['documentType' => $documentType],
-            'body' => null
-        ];
-        return $this->restCall($path, 'GET', $guzzleParams,'' );
-    }
-
-    /**
      * Removes the transaction from consideration when evaluating regulations that span multiple transactions.
      *
      * 
@@ -11067,7 +11047,7 @@ class AvaTaxClient extends AvaTaxClientBase
      * @param string $companyCode The company code of the company that recorded the transaction
      * @param string $transactionCode The transaction code to retrieve
      * @param string $documentType (Optional): The document type of the transaction to operate on. If omitted, defaults to "SalesInvoice"
-     * @return object
+     * @return 
      */
     public function deregisterShipment($companyCode, $transactionCode, $documentType)    {
         $path = "/api/v2/companies/{$companyCode}/transactions/{$transactionCode}/shipment/registration";
@@ -11087,7 +11067,7 @@ class AvaTaxClient extends AvaTaxClientBase
      * @param string $companyCode The company code of the company that recorded the transaction
      * @param string $transactionCode The transaction code to retrieve
      * @param string $documentType (Optional): The document type of the transaction to operate on. If omitted, defaults to "SalesInvoice"
-     * @return object
+     * @return 
      */
     public function registerShipment($companyCode, $transactionCode, $documentType)    {
         $path = "/api/v2/companies/{$companyCode}/transactions/{$transactionCode}/shipment/registration";

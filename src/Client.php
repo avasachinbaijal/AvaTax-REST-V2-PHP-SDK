@@ -199,20 +199,30 @@ class AvaTaxClientBase
         // Contact the server
         try {
             $response = $this->client->request($verb, $apiUrl, $guzzleParams);
-
             $body = $response->getBody();
 
+            $length =  $response->getHeader('Content-Length')[0];
+            $code=$response->getStatusCode();
+            $contentTypes =  $response->getHeader('Content-Type');
+            
+            if ( in_array ("application/json",$contentTypes))
+            {
+                if ($length ==0 and intdiv($code , 100) ==2 ){
+                        return null;                
+                }
+            }
             $JsonBody = json_decode($body);
             if (is_null($JsonBody)) {
-			  if (json_last_error() === JSON_ERROR_SYNTAX) {
-				  throw new \Exception('The response is in unexpected format. The response is: ' . $JsonBody);
-			  }
+                if (json_last_error() === JSON_ERROR_SYNTAX) {
+				     throw new \Exception('The response is in unexpected format. The response is: ' . $JsonBody);
+			     }
               return $body;
             } else {
               return $JsonBody;
             }
 
         } catch (\Exception $e) {
+            echo "in excpetion";
             if (!$this->catchExceptions) {
                 throw $e;
             }
